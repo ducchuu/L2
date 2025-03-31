@@ -160,12 +160,13 @@ def make_bar_plot(predicate_name, predicates, sort, sorts):
     if not(any(0 in row for row in result_matrix)):
         color.pop(0)
         possibilities.pop(0)
-        if len(np.unique(np.array(result_matrix).squeeze())) == 1:
-            possibilities = [possibilities[np.array(result_matrix).squeeze()[0] - 1]]
-            color = [color[np.array(result_matrix).squeeze()[0] - 1]]
+        if len(result_matrix) == 1 and len(np.unique(result_matrix[0])) == 1:
+            unique_val = result_matrix[0][0] - 1
+            possibilities = [possibilities[unique_val]]
+            color = [color[unique_val]]
     # Hardcoded but fixed the True False bug...
     else:
-        items = np.unique(np.array(result_matrix).squeeze())
+        items = np.unique(np.concatenate(result_matrix)).tolist()
         possibilities = [possibilities[i] for i in items]
         color = [color[i] for i in items]
     color_dict = {str(possibilities[i]) : color[i] for i in range(0, len(possibilities))}
